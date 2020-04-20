@@ -1,35 +1,16 @@
 class Solution(object):
-    def generateParenthesis(self, n):
-        def combinations(test=[]):
-            if len(test) == 2 * n:
-                if valid(test):
-                    ans.append(''.join(test))
-            else:
-                test.append('(')
-                combinations(test)
-                test.pop()
-                test.append(')')
-                combinations(test)
-                test.pop()
-
-        def valid(comb):
-            pair = 0
-            for c in comb:
-                if c == '(':
-                    pair += 1
-                else:
-                    pair -= 1
-                if pair < 0:
-                    return False
-            return pair == 0
-
+    def generateParenthesis(self, N):
+        if N == 0: return ['']
         ans = []
-        combinations()
+        for c in range(N):
+            for left in self.generateParenthesis(c):
+                for right in self.generateParenthesis(N-1-c):
+                    ans.append('({}){}'.format(left, right))
         return ans
 
 # Test
 a = Solution()
 
 #1
-n = 5
+n = 3
 print(a.generateParenthesis(n))
